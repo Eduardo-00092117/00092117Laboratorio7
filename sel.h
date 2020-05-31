@@ -148,23 +148,12 @@ Matrix createLocalK(int e,mesh &m){
     calculateBetaMatrix(Beta);
     productRealMatrix(u_bar*J/(6*D),productMatrixMatrix(g_matrix,productMatrixMatrix(Alpha,Beta,2,2,6),6,2,6),matrixA);
 
-    Alpha2 = Alpha;
-    Beta2 = Beta;
-
     //Preparando matrixK (En clase conocida simplemente como K)
     nu = m.getParameter(KAPPA);
     Ae = calculateLocalArea(e,m);
     transpose(Alpha,Alphat);
     transpose(Beta,Betat);
     productRealMatrix(nu*Ae/(D*D),productMatrixMatrix(Betat,productMatrixMatrix(Alphat,productMatrixMatrix(Alpha,Beta,2,2,6),2,2,6),6,2,6),matrixK);
-
-    
-    //Preparando matrixM (En clase conocida simplemente como M)
-    delta = -m.getParameter(DELTA);
-    Ae2 = calculateLocalArea(e,m);
-    transpose(Alpha2,Alphat2);
-    transpose(Beta2,Betat2);
-    productRealMatrix(delta*Ae2/(D*D),productMatrixMatrix(Betat2,productMatrixMatrix(Alphat2,productMatrixMatrix(Alpha2,Beta2,2,2,6),2,2,6),6,2,6),matrixM);
 
     //Preparando matrixG (En clase conocida simplemente como G)
     rho = m.getParameter(LAMBDA);
@@ -176,11 +165,16 @@ Matrix createLocalK(int e,mesh &m){
     productRealMatrix(J/(6*D),productMatrixMatrix(BPrimat,productMatrixMatrix(Alphat,g_matrix_t,2,2,6),3,2,6),matrixD);
     //BPrimat,productMatrixMatrix(Alphat,g_matrix_t,2,2,6),3,2,6)
     //Colocando submatrices en K
+
+    //Preparando matrixM (En clase conocida simplemente como M)
+    delta = -m.getParameter(DELTA);
+    Ae2 = calculateLocalArea(e,m);
+    productRealMatrix(delta*Ae2/(D*D),productMatrixMatrix(Betat,productMatrixMatrix(Alphat,productMatrixMatrix(Alpha,BPrima,2,2,3),2,2,3),6,2,3),matrixM);
+    
     zeroes(K,9);
     ubicarSubMatriz(K,0,5,0,5,sumMatrix(matrixA,matrixK,6,6));
-    ubicarSubMatriz(K,0,5,6,8,sumMatrix(matrixG,matrixM,6,6));
+    ubicarSubMatriz(K,0,5,6,8,sumMatrix(matrixG,matrixM,6,3));
     ubicarSubMatriz(K,6,8,0,5,matrixD);
-    showMatrix(sumMatrix(matrixA,matrixK,6,6));
     return K;
 }
 

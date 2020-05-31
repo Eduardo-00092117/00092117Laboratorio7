@@ -88,7 +88,7 @@ void leerMallayCondiciones(mesh &m,char *filename){
     file >> nnodes >> neltos >> ndirich_u >> ndirich_v >>ndirich_p;
     //cout <<nnodes<<neltos<<ndirich_u<<ndirich_v<<ndirich_p<<"\n";
 
-    m.setParameters((0.25)*tau, kappa, lambda, psi_fx, psi_fy, (0.125)*delta, eta);
+    m.setParameters((0.25)*tau, kappa, (2*lambda)/3, psi_fx, psi_fy, (0.125)*delta, eta);
     m.setSizes(nnodes,neltos,ndirich_u+ndirich_v+ndirich_p);
     m.createData();
 
