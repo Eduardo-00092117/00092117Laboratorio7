@@ -67,8 +67,8 @@ void calculateLocalA(int i,Matrix &A,mesh m){
     node n2 = m.getNode(e.getNode2()-1);
     node n3 = m.getNode(e.getNode3()-1);
 
-    A.at(0).at(0) = calcularTenedor(e,EQUIS,2,1,m); A.at(0).at(1) = calcularTenedor(e,YE,2,1,m);
-    A.at(1).at(0) = calcularTenedor(e,EQUIS,3,1,m); A.at(1).at(1) = calcularTenedor(e,YE,3,1,m);
+    A.at(0).at(0) = calcularTenedor(e,YE,3,1,m);  A.at(0).at(1) = calcularTenedor(e,YE,1,2,m);
+    A.at(1).at(0) = calcularTenedor(e,EQUIS,1,3,m);  A.at(1).at(1) = calcularTenedor(e,EQUIS,2,1,m);
 }
 
 //Matriz Beta
